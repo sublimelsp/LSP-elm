@@ -1,0 +1,16 @@
+{
+	"client" : {
+		"enabled": true,
+	    "languages": [
+            {
+                "languageId": "elm",
+                "scopes": ["source.elm"],
+	            "syntaxes": ["Packages/User/Elm.sublime-syntax"]
+            }
+        ],
+        "initializationOptions": {
+            "elmAnalyseTrigger": "change"
+        },
+		"settings": {}
+	}
+}
