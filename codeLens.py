@@ -20,12 +20,14 @@ except ImportError:
 color_phantoms_by_view = dict()  # type: Dict[int, sublime.PhantomSet]
 
 
-class LspColorListener(sublime_plugin.ViewEventListener):
+class LspCodeLensListener(sublime_plugin.ViewEventListener):
     def __init__(self, view: sublime.View) -> None:
         super().__init__(view)
         self._stored_point = -1
         self.initialized = False
         self.enabled = False
+        self.phantoms = []
+        self.phantom_set = sublime.PhantomSet(self.view, 'code_lens')
 
     @classmethod
     def is_applicable(cls, _settings: 'Any') -> bool:
@@ -33,10 +35,6 @@ class LspColorListener(sublime_plugin.ViewEventListener):
         is_supported = syntax and is_supported_syntax(syntax, client_configs.all)
         disabled_by_user = 'codeLensProvider' in settings.disabled_capabilities
         return is_supported and not disabled_by_user
-
-    @property
-    def phantom_set(self) -> sublime.PhantomSet:
-        return color_phantoms_by_view.setdefault(self.view.id(), sublime.PhantomSet(self.view, "lsp_code_lens"))
 
     def on_activated_async(self) -> None:
         if not self.initialized:
@@ -94,34 +92,24 @@ class LspColorListener(sublime_plugin.ViewEventListener):
                     self.handle_response
                 )
 
-    def handle_response(self, response: 'Optional[List[dict]]') -> None:
-        print('ehej', response)
+    def handle_response(self, code_lens_response: 'Optional[List[dict]]') -> None:
+        client = client_from_session(session_for_view(self.view, 'codeLensProvider'))
+        if client and code_lens_response:
+            for code_lens in code_lens_response:
+                client.send_request(
+                    Request.codeLensResolve(code_lens),
+                    self.handle_resolve
+                )
 
-        # color_infos = response if response else []
-        # phantoms = []
-        # for color_info in color_infos:
-        #     color = color_info['color']
-        #     red = color['red'] * 255
-        #     green = color['green'] * 255
-        #     blue = color['blue'] * 255
-        #     alpha = color['alpha']
+    def handle_resolve(self, response: 'Optional[List[dict]]') -> None:
+        range = Range.from_lsp(response['range'])
+        region = range_to_region(range, self.view)
 
-        #     content = """
-        #     <div style='padding: 0.4em;
-        #                 margin-top: 0.2em;
-        #                 border: 1px solid color(var(--foreground) alpha(0.25));
-        #                 background-color: rgba({}, {}, {}, {})'>
-        #     </div>""".format(red, green, blue, alpha)
+        content = "<small>{}</small>".format(response["command"]["title"])
+        for p in self.phantoms:
+            if p.region.contains(region):
+                content = "{} | {}".format(p.content, content)
+                self.phantoms.remove(p)
 
-        #     range = Range.from_lsp(color_info['range'])
-        #     region = range_to_region(range, self.view)
-
-        #     phantoms.append(sublime.Phantom(region, content, sublime.LAYOUT_INLINE))
-
-        # self.phantom_set.update(phantoms)
-
-
-# def remove_color_boxes(view: sublime.View) -> None:
-#     phantom_set = color_phantoms_by_view.get(view.id())
-#     if phantom_set:
-#         phantom_set.update([])
+        self.phantoms.append(sublime.Phantom(region, content, sublime.LAYOUT_BELOW))
+        self.phantom_set.update(self.phantoms)
