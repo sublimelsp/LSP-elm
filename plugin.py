@@ -85,7 +85,7 @@ class LspElmPlugin(LanguageHandler):
                 {
                     "languageId": "elm",
                     "scopes": ["source.elm"],
-                    "syntaxes": ["Packages/User/Elm.sublime-syntax"]
+                    "syntaxes": ["Packages/Elm Syntax Highlighting/src/elm.sublime-syntax"]
                 }
             ],
             "initializationOptions": {
