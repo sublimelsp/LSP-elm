@@ -4,7 +4,7 @@
   "description": "Elm support for Sublime LSP",
   "main": "index.js",
   "dependencies": {
-    "@elm-tooling/elm-language-server": "^1.5.0"
+    "@elm-tooling/elm-language-server": "^1.6.2"
   },
   "devDependencies": {},
   "scripts": {
