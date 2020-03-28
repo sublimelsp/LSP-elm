@@ -44,17 +44,9 @@ class LspElmPlugin(LanguageHandler):
         configuration = {
             "enabled": settings.get("enabled", True),
             "command": ['node', server.binary_path, '--stdio'],
-            "languages": settings.get("languages", [
-                {
-                    "languageId": "elm",
-                    "scopes": ["source.elm"],
-                    "syntaxes": ["Packages/Elm Syntax Highlighting/src/elm.sublime-syntax"]
-                }
-            ]),
-            "initializationOptions": settings.get("initializationOptions", {
-                "elmAnalyseTrigger": "change"
-            }),
-            "settings": settings.get("settings", {})
+            "languages": settings.get("languages"),
+            "initializationOptions": settings.get("initializationOptions"),
+            "settings": settings.get("settings")
         }
 
         return read_client_config(self.name, configuration)
