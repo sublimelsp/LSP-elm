@@ -81,13 +81,7 @@ class LspElmPlugin(LanguageHandler):
                 server_path,
                 '--stdio'
             ],
-            "languages": [
-                {
-                    "languageId": "elm",
-                    "scopes": ["source.elm"],
-                    "syntaxes": ["Packages/Elm Syntax Highlighting/src/elm.sublime-syntax"]
-                }
-            ],
+            "languages": [{"languageId": "elm"}],
             "initializationOptions": {
                 "elmAnalyseTrigger": "change"
             }
