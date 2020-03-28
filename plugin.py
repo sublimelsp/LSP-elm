@@ -61,7 +61,7 @@ class LspElmPlugin(LanguageHandler):
             "settings": settings.get("settings", {})
         }
 
-        return read_client_config('lsp-elm', configuration)
+        return read_client_config(self.name, configuration)
 
     def on_start(self, window) -> bool:
         if not is_node_installed():
