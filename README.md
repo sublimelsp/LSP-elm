@@ -7,6 +7,8 @@ Elm support for Sublime's LSP plugin.
 
 Make sure you have [NodeJS and NPM](https://nodejs.org/) installed.
 
+### Installation
+
 You will need to install `elm` and `elm-test` to get all diagnostics and `elm-format` for formatting. 
 
 ```
