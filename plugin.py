@@ -43,11 +43,7 @@ class LspElmPlugin(LanguageHandler):
 
         configuration = {
             "enabled": settings.get("enabled", True),
-            "command": [
-                'node',
-                server.binary_path,
-                '--stdio'
-            ],
+            "command": ['node', server.binary_path, '--stdio'],
             "languages": settings.get("languages", [
                 {
                     "languageId": "elm",
