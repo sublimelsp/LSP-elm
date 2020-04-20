@@ -1,7 +1,7 @@
 {
   "name": "@elm-tooling/elm-language-server",
-  "version": "1.6.3",
+  "version": "1.0.0",
   "dependencies": {
-    "@elm-tooling/elm-language-server": "1.6.3"
+    "@elm-tooling/elm-language-server": "^1.6.3"
   }
 }
