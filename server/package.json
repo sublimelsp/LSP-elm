@@ -1,0 +1,7 @@
+{
+  "name": "elm-language-server",
+  "version": "1.0.0",
+  "dependencies": {
+    "@elm-tooling/elm-language-server": "^1.11.0"
+  }
+}
