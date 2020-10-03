@@ -46,6 +46,8 @@ class LspCodeLensListener(sublime_plugin.ViewEventListener):
         self.initialized = False
         self.enabled = False
         self.phantoms = []
+        self.response_count = -1
+        self.current_count = 0
         self.phantom_set = sublime.PhantomSet(self.view, 'code_lens')
 
     @classmethod
@@ -61,12 +63,11 @@ class LspCodeLensListener(sublime_plugin.ViewEventListener):
             self.initialize()
 
     def initialize(self, is_retry: bool = False) -> None:
-        sessions = list(sessions_for_view(self.view))
+        sessions = list(sessions_for_view(self.view, 'codeLensProvider'))
         if sessions:
             self.initialized = True
-            if any(session.has_capability('codeLensProvider') for session in sessions):
-                self.enabled = True
-                self.send_code_lens_request()
+            self.enabled = True
+            self.send_code_lens_request()
         elif not is_retry:
             # session may be starting, try again once in a second.
             sublime.set_timeout_async(lambda: self.initialize(is_retry=True), 1000)
@@ -77,15 +78,23 @@ class LspCodeLensListener(sublime_plugin.ViewEventListener):
         if self.enabled:
             self.schedule_request()
 
+    def on_text_changed(self) -> None:
+        if self.enabled:
+            self.schedule_request()
+
+    def on_revert(self) -> None:
+         if self.enabled:
+            self.schedule_request()
+
     def schedule_request(self) -> None:
         sel = self.view.sel()
         if len(sel) < 1:
             return
 
-        current_point = sel[0].begin()
+        current_point = sel[0].b
         if self._stored_point != current_point:
             self._stored_point = current_point
-            sublime.set_timeout_async(lambda: self.fire_request(current_point), 800)
+            sublime.set_timeout_async(lambda: self.fire_request(current_point), 1000)
 
     def fire_request(self, current_point: int) -> None:
         if current_point == self._stored_point:
@@ -111,8 +120,11 @@ class LspCodeLensListener(sublime_plugin.ViewEventListener):
 
     def handle_response(self, code_lens_response: 'Optional[List[dict]]') -> None:
         session = find_session(self.view, 'codeLensProvider')
-        print('handle_response', code_lens_response)
         if session and code_lens_response:
+            # print('handle_response', len(code_lens_response))
+            self.phantoms = []
+            self.current_count = 0
+            self.response_count = len(code_lens_response)
             for code_lens in code_lens_response:
                 session.send_request(
                     Request('codeLens/resolve', code_lens),
@@ -120,14 +132,16 @@ class LspCodeLensListener(sublime_plugin.ViewEventListener):
                 )
 
     def handle_resolve(self, response: 'Optional[List[dict]]') -> None:
+        self.current_count += 1
+        # print(self.current_count)
         range = Range.from_lsp(response['range'])
         region = range_to_region(range, self.view)
 
         content = "<small>{}</small>".format(response["command"]["title"])
-        for p in self.phantoms:
-            if p.region.intersects(region):
-                content = "{} | {}".format(p.content, content)
-                self.phantoms.remove(p)
-
         self.phantoms.append(sublime.Phantom(region, content, sublime.LAYOUT_BELOW))
-        self.phantom_set.update(self.phantoms)
+
+        if self.current_count == self.response_count:
+            self.current_count = 0
+            self.response_count = -1
+            print('apply', len(self.phantoms))
+            self.phantom_set.update(self.phantoms)
