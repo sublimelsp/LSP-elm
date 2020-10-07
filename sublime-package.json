@@ -1,0 +1,77 @@
+{
+    "contributions": {
+        "settings": [
+            {
+                "file_patterns": [
+                    "/LSP-elm.sublime-settings"
+                ],
+                "schema": {
+                    "$id": "sublime://settings/LSP-elm",
+                    "definitions": {
+                        "PluginConfig": {
+                            "properties": {
+                                "initializationOptions": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "trace.server": {
+                                            "type": "boolean",
+                                            "markdownDescription": "Enable/disable trace logging of client and server communication"
+                                        },
+                                        "elmPath": {
+                                            "type": "string",
+                                            "markdownDescription": "The path to your `elm` executable. Should be empty by default, in that case it will assume the name and try to first get it from a local npm installation or a global one. If you set it manually it will not try to load from the npm folder."
+                                        },
+                                        "elmFormatPath": {
+                                            "type": "string",
+                                            "markdownDescription": "The path to your `elm-format` executable. Should be empty by default, in that case it will assume the name and try to first get it from a local npm installation or a global one. If you set it manually it will not try to load from the npm folder."
+                                        },
+                                        "elmTestPath": {
+                                            "type": "string",
+                                            "markdownDescription": "The path to your elm-test executable. Should be empty by default, in that case it will assume the name and try to first get it from a local npm installation or a global one. If you set it manually it will not try to load from the npm folder."
+                                        },
+                                        "elmAnalyseTrigger": {
+                                            "type": "string",
+                                            "default": "change",
+                                            "enum": ["change", "save", "never"],
+                                            "markdownDescription": "elmLS.elmAnalyseTrigger: `elm-analyse` executed on `'change'`, `'save'` or `'never'` (default: `'never'`)"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "type": "object",
+                    "allOf": [
+                        {
+                            "$ref": "sublime://settings/LSP-plugin-base"
+                        },
+                        {
+                            "$ref": "sublime://settings/LSP-elm#/definitions/PluginConfig"
+                        }
+                    ]
+                }
+            },
+            {
+              "file_patterns": [
+                "/*.sublime-project"
+              ],
+              "schema": {
+                "properties": {
+                  "settings": {
+                    "properties": {
+                      "LSP": {
+                        "properties": {
+                          "LSP-elm": {
+                            "$ref": "sublime://settings/LSP-elm#/definitions/PluginConfig"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+        ]
+    }
+}
