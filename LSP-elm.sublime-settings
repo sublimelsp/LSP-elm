@@ -7,7 +7,7 @@
 		}
 	],
 	"initializationOptions": {
-		"elmAnalyseTrigger": "change"
+		"elmAnalyseTrigger": "never"
 	},
 	"settings": {}
 }

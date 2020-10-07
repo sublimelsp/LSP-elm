@@ -32,7 +32,7 @@
                                         },
                                         "elmAnalyseTrigger": {
                                             "type": "string",
-                                            "default": "change",
+                                            "default": "never",
                                             "enum": ["change", "save", "never"],
                                             "markdownDescription": "elmLS.elmAnalyseTrigger: `elm-analyse` executed on `'change'`, `'save'` or `'never'` (default: `'never'`)"
                                         }
