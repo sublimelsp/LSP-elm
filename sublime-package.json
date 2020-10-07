@@ -16,7 +16,7 @@
                                     "properties": {
                                         "trace.server": {
                                             "type": "boolean",
-                                            "markdownDescription": "Enable/disable trace logging of client and server communication"
+                                            "markdownDescription": "Enable/disable trace logging of client and server communication."
                                         },
                                         "elmPath": {
                                             "type": "string",
@@ -28,13 +28,17 @@
                                         },
                                         "elmTestPath": {
                                             "type": "string",
-                                            "markdownDescription": "The path to your elm-test executable. Should be empty by default, in that case it will assume the name and try to first get it from a local npm installation or a global one. If you set it manually it will not try to load from the npm folder."
+                                            "markdownDescription": "The path to your `elm-test` executable. Should be empty by default, in that case it will assume the name and try to first get it from a local npm installation or a global one. If you set it manually it will not try to load from the npm folder."
                                         },
                                         "elmAnalyseTrigger": {
                                             "type": "string",
                                             "default": "never",
-                                            "enum": ["change", "save", "never"],
-                                            "markdownDescription": "elmLS.elmAnalyseTrigger: `elm-analyse` executed on `'change'`, `'save'` or `'never'` (default: `'never'`)"
+                                            "enum": [
+                                                "change",
+                                                "save",
+                                                "never"
+                                            ],
+                                            "markdownDescription": "Execute `elm-analyse` on `'change'`, `'save'` or `'never'` (default: `'never'`)."
                                         }
                                     }
                                 }
@@ -53,24 +57,24 @@
                 }
             },
             {
-              "file_patterns": [
-                "/*.sublime-project"
-              ],
-              "schema": {
-                "properties": {
-                  "settings": {
+                "file_patterns": [
+                    "/*.sublime-project"
+                ],
+                "schema": {
                     "properties": {
-                      "LSP": {
-                        "properties": {
-                          "LSP-elm": {
-                            "$ref": "sublime://settings/LSP-elm#/definitions/PluginConfig"
-                          }
+                        "settings": {
+                            "properties": {
+                                "LSP": {
+                                    "properties": {
+                                        "LSP-elm": {
+                                            "$ref": "sublime://settings/LSP-elm#/definitions/PluginConfig"
+                                        }
+                                    }
+                                }
+                            }
                         }
-                      }
                     }
-                  }
                 }
-              }
             },
         ]
     }
