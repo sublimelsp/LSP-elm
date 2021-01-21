@@ -7,7 +7,11 @@
 		}
 	],
 	"initializationOptions": {
-		"elmAnalyseTrigger": "never"
+		"trace.server": "off",
+		"elmPath": "",
+		"elmFormatPath": "",
+		"disableElmLSDiagnostics": false,
+		"skipInstallPackageConfirmation": false
 	},
 	"settings": {}
 }
