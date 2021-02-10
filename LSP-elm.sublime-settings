@@ -10,8 +10,10 @@
 		"trace.server": "off",
 		"elmPath": "",
 		"elmFormatPath": "",
+		"elmTestPath": "",
 		"disableElmLSDiagnostics": false,
-		"skipInstallPackageConfirmation": false
+		"skipInstallPackageConfirmation": false,
+		"onlyUpdateDiagnosticsOnSave": false
 	},
 	"settings": {}
 }
