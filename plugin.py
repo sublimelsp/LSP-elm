@@ -16,7 +16,3 @@ class LspElmPlugin(NpmClientHandler):
     server_binary_path = os.path.join(
         server_directory, 'node_modules', '@elm-tooling', 'elm-language-server', 'out', 'index.js'
     )
-
-    @classmethod
-    def install_in_cache(cls) -> bool:
-        return False
