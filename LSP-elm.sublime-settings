@@ -10,6 +10,8 @@
 	"initializationOptions": {
 		"trace.server": "off",
 		"elmPath": "",
+		"elmReviewPath": "",
+		"elmReviewDiagnostics": "off",
 		"elmFormatPath": "",
 		"elmTestPath": "",
 		"disableElmLSDiagnostics": false,

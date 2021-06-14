@@ -15,6 +15,12 @@ You will need to install `elm` and `elm-test` to get all diagnostics and `elm-fo
 npm install -g elm elm-test elm-format
 ```
 
+If you want to use elm-review:
+
+```
+npm install -g elm-review
+```
+
 * Install [LSP](https://packagecontrol.io/packages/LSP), [Elm Syntax Highlighting](https://packagecontrol.io/packages/Elm%20Syntax%20Highlighting) and `LSP-elm` from Package Control.
 * Restart Sublime.
 
