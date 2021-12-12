@@ -2,12 +2,11 @@
 
 Elm support for Sublime's LSP plugin.
 
-
-### Requirements 
+## Requirements
 
 Make sure you have [NodeJS and NPM](https://nodejs.org/) installed.
 
-### Installation
+## Installation
 
 You will need to install `elm` and `elm-test` to get all diagnostics and `elm-format` for formatting. 
 
@@ -24,7 +23,7 @@ npm install -g elm-review
 * Install [LSP](https://packagecontrol.io/packages/LSP), [Elm Syntax Highlighting](https://packagecontrol.io/packages/Elm%20Syntax%20Highlighting) and `LSP-elm` from Package Control.
 * Restart Sublime.
 
-### Configuration
+## Configuration
 
 Open configuration file using command palette with `Preferences: LSP-elm Settings` command or by accessing `Preferences > Package Settings > LSP > Servers > LSP-elm` from the sublime menu.
 
