@@ -9,9 +9,11 @@
 		"elmTestPath": "",
 		"disableElmLSDiagnostics": false,
 		"skipInstallPackageConfirmation": false,
-		"onlyUpdateDiagnosticsOnSave": false
+		"onlyUpdateDiagnosticsOnSave": false,
+		"extendedCapabilities": {
+			"moveFunctionRefactoringSupport": true
+		}
 	},
-	"settings": {},
 	// ST4
 	"selector": "source.elm",
 	// ST3
