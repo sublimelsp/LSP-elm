@@ -1,4 +1,4 @@
-from .types import ShowReferencesAction
+from .types import ShowReferencesParams
 from LSP.plugin.core.typing import Mapping, Callable, Any, cast
 from LSP.plugin.locationpicker import LocationPicker
 from lsp_utils import NpmClientHandler
@@ -26,7 +26,7 @@ class LspElmPlugin(NpmClientHandler):
 
     def on_pre_server_command(self, params: Mapping[str, Any], done_callback: Callable[[], None]) -> bool:
         if params['command'] == 'editor.action.showReferences':
-            arguments = cast(ShowReferencesAction, params['arguments'])
+            arguments = cast(ShowReferencesParams, params['arguments'])
             session = self.weaksession()
             view = sublime.active_window().active_view()
             if not session or not view:
