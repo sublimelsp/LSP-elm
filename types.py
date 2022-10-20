@@ -7,4 +7,4 @@ ShowReference = TypedDict('ShowReference', {
     'range': Range
 })
 
-ShowReferencesAction = List[ShowReference]
+ShowReferencesParams = List[ShowReference]
