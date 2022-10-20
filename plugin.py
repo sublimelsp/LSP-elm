@@ -16,3 +16,7 @@ class LspElmPlugin(NpmClientHandler):
     server_binary_path = os.path.join(
         server_directory, 'node_modules', '@elm-tooling', 'elm-language-server', 'out', 'index.js'
     )
+
+    @classmethod
+    def required_node_version(cls) -> str:
+        return ">=14"
