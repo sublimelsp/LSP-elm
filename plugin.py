@@ -28,11 +28,10 @@ class LspElmPlugin(NpmClientHandler):
         if params['command'] == 'editor.action.showReferences':
             arguments = cast(ShowReferencesAction, params['arguments'])
             session = self.weaksession()
-            if not session:
-                return False
             view = sublime.active_window().active_view()
-            if not view:
-                return False
+            if not session or not view:
+                done_callback()
+                return True
             references = arguments[0]['references']
             if len(references) == 1:
                 args = {
