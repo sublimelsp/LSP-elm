@@ -89,12 +89,8 @@ class LspElmPlugin(NpmClientHandler):
                 'destination': destination
             }  # type: MoveParams
             move_request = Request("elm/move", move_params)
-            session.send_request(move_request, lambda result: pass)
+            session.send_request(move_request, lambda result: None) # no need to handle result
 
         placeholder = 'Select the new file for the function {}'.format(function_name)
         items = [d['name'] for d in destinations]
         window.show_quick_panel(items, placeholder=placeholder, on_select=on_done)
-
-    def on_move_function(self, _: Any) -> None:
-        # There is nothing to be done anymore
-        return None
