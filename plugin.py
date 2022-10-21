@@ -89,7 +89,7 @@ class LspElmPlugin(NpmClientHandler):
                 'destination': destination
             }  # type: MoveParams
             move_request = Request("elm/move", move_params)
-            session.send_request(move_request, self.on_move_function)
+            session.send_request(move_request, lambda result: pass)
 
         placeholder = 'Select the new file for the function {}'.format(function_name)
         items = [d['name'] for d in destinations]
