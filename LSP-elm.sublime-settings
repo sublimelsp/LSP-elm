@@ -12,6 +12,5 @@
 		"onlyUpdateDiagnosticsOnSave": false
 	},
 	"settings": {},
-	// ST4
 	"selector": "source.elm"
 }
