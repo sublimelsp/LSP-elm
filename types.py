@@ -1,4 +1,4 @@
-from LSP.plugin.core.protocol import URI, CodeActionParams, Location, NotRequired, Range, TextDocumentIdentifier
+from LSP.plugin.core.protocol import URI, Location, NotRequired, Range, TextDocumentIdentifier
 from LSP.plugin.core.typing import Tuple, TypedDict, List
 
 # Code Lens Show Reference - Start
@@ -33,14 +33,9 @@ MoveDestinationsResponse = TypedDict('MoveDestinationsResponse', {
   'destinations': List[MoveDestination]
 })
 
-MoveFunctionCodeAction = TypedDict("MoveFunctionCodeAction", {
+MoveFunctionCommand = TypedDict("MoveFunctionCommand", {
   'arguments': Tuple[str, MoveParamsParams, str],
   'command': str,  # string like elm.refactor-${workspaceId}, for example: 'elm.refactor-file:///home/predragnikolic/Documents/sandbox/elm-spa-example'
   'title': str
-})
-
-MaybeMoveFunctionCodeAction = TypedDict("MaybeMoveFunctionCodeAction", {
-  'command': NotRequired[MoveFunctionCodeAction]
-  # other properties are not important for the move request
 })
 # Move Function Code Action - End

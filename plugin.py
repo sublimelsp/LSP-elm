@@ -1,5 +1,5 @@
-from LSP.plugin.core.protocol import Dict, Request, Response
-from .types import MaybeMoveFunctionCodeAction, MoveDestinationsResponse, MoveParamsParams, ShowReferencesParams, MoveParams
+from .types import MoveDestinationsResponse, MoveFunctionCommand, MoveParamsParams, ShowReferencesParams, MoveParams
+from LSP.plugin.core.protocol import CodeAction, Request, Response
 from LSP.plugin.core.typing import Mapping, Callable, Any, cast
 from LSP.plugin.locationpicker import LocationPicker
 from lsp_utils import NpmClientHandler
@@ -49,14 +49,13 @@ class LspElmPlugin(NpmClientHandler):
 
     def on_server_response_async(self, method: str, response: Response) -> None:
         if method == 'codeAction/resolve':
-            self.maybe_handle_move_code_action(response)
+            self.maybe_handle_move_code_action(cast(CodeAction, response.result))
 
-    def maybe_handle_move_code_action(self, response: Response) -> None:
+    def maybe_handle_move_code_action(self, code_action: CodeAction) -> None:
         session = self.weaksession()
         if not session:
             return
-        result = cast(MaybeMoveFunctionCodeAction, response.result)
-        command = result.get('command')
+        command = cast(MoveFunctionCommand, code_action.get('command'))
         if not command:
             return
         command_name, params, function_name = command.get('arguments')
