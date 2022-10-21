@@ -44,5 +44,3 @@ MaybeMoveFunctionCodeAction = TypedDict("MaybeMoveFunctionCodeAction", {
   # other properties are not important for the move request
 })
 # Move Function Code Action - End
-
-
