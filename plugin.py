@@ -59,9 +59,7 @@ class LspElmPlugin(NpmClientHandler):
         command = result.get('command')
         if not command:
             return
-        command_name = command.get('arguments')[0]
-        params = command.get('arguments')[1]
-        function_name = command.get('arguments')[2]
+        command_name, params, function_name = command.get('arguments')
         if command_name == 'moveFunction':
             move_params = {
                 'sourceUri': params.get('textDocument').get('uri'),
