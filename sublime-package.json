@@ -68,6 +68,15 @@
                                           "type": "boolean",
                                           "default": false,
                                           "description": "Only update compiler diagnostics on save, not on document change."
+                                        },
+                                        "extendedCapabilities": {
+                                            "type": "object",
+                                            "properties": {
+                                                "moveFunctionRefactoringSupport": {
+                                                    "type": "boolean",
+                                                    "default": false
+                                                }
+                                            }
                                         }
                                     }
                                 }
