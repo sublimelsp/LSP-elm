@@ -52,20 +52,22 @@ class LspElmPlugin(NpmClientHandler):
             self.maybe_handle_move_code_action(cast(CodeAction, response.result))
 
     def maybe_handle_move_code_action(self, code_action: CodeAction) -> None:
+        if code_action['title'] != 'Move Function':
+            return
         session = self.weaksession()
         if not session:
             return
         command = cast(MoveFunctionCommand, code_action.get('command'))
         if not command:
             return
-        command_name, params, function_name = command.get('arguments')
-        if command_name == 'moveFunction':
-            move_params = {
-                'sourceUri': params.get('textDocument').get('uri'),
-                'params': params
-            }  # type: MoveParams
-            get_move_destinations_request = Request('elm/getMoveDestinations', move_params)
-            session.send_request(get_move_destinations_request, lambda res: self.on_get_destinations(res, params, function_name))
+        _, params, function_name = command.get('arguments')
+        move_params = {
+            'sourceUri': params.get('textDocument').get('uri'),
+            'params': params
+        }  # type: MoveParams
+        get_move_destinations_request = Request('elm/getMoveDestinations', move_params)
+        session.send_request(get_move_destinations_request,
+                             lambda res: self.on_get_destinations(res, params, function_name))
 
     def on_get_destinations(self, response: MoveDestinationsResponse, params: MoveParamsParams, function_name: str) -> None:
         destinations = response.get('destinations')
@@ -88,7 +90,7 @@ class LspElmPlugin(NpmClientHandler):
                 'destination': destination
             }  # type: MoveParams
             move_request = Request("elm/move", move_params)
-            session.send_request(move_request, lambda result: None) # no need to handle result
+            session.send_request(move_request, lambda _: None) # no need to handle result
 
         placeholder = 'Select the new file for the function {}'.format(function_name)
         items = [d['name'] for d in destinations]
