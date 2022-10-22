@@ -65,8 +65,7 @@ class LspElmPlugin(NpmClientHandler):
             'sourceUri': params.get('textDocument').get('uri'),
             'params': params
         }  # type: MoveParams
-        get_move_destinations_request = Request('elm/getMoveDestinations', move_params)
-        session.send_request(get_move_destinations_request,
+        session.send_request(Request('elm/getMoveDestinations', move_params),
                              lambda res: self.on_get_destinations(res, params, function_name))
 
     def on_get_destinations(self, response: MoveDestinationsResponse, params: MoveParamsParams, function_name: str) -> None:
@@ -89,8 +88,8 @@ class LspElmPlugin(NpmClientHandler):
                 'params': params,
                 'destination': destination
             }  # type: MoveParams
-            move_request = Request("elm/move", move_params)
-            session.send_request(move_request, lambda _: None) # no need to handle result
+            session.send_request(Request("elm/move", move_params),
+                                 lambda _: None) # no need to handle result
 
         placeholder = 'Select the new file for the function {}'.format(function_name)
         items = [d['name'] for d in destinations]
