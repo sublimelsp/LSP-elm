@@ -15,14 +15,5 @@
 		}
 	},
 	"settings": {},
-	// ST4
-	"selector": "source.elm",
-	// ST3
-	"languages": [
-		{
-			"languageId": "elm",
-			"scopes": ["source.elm"],
-			"syntaxes": ["Packages/Elm Syntax Highlighting/src/elm.sublime-syntax"]
-		}
-	],
+	"selector": "source.elm"
 }
