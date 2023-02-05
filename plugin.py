@@ -6,6 +6,7 @@ from lsp_utils import NpmClientHandler
 import os
 import sublime
 
+
 def plugin_loaded():
     LspElmPlugin.setup()
 
@@ -68,7 +69,9 @@ class LspElmPlugin(NpmClientHandler):
         session.send_request(Request('elm/getMoveDestinations', move_params),
                              lambda res: self.on_get_destinations(res, params, function_name))
 
-    def on_get_destinations(self, response: MoveDestinationsResponse, params: MoveParamsParams, function_name: str) -> None:
+    def on_get_destinations(
+        self, response: MoveDestinationsResponse, params: MoveParamsParams, function_name: str
+    ) -> None:
         destinations = response.get('destinations')
         if not destinations:
             sublime.status_message('LSP-elm: No destinations to choose.')
@@ -89,7 +92,7 @@ class LspElmPlugin(NpmClientHandler):
                 'destination': destination
             }  # type: MoveParams
             session.send_request(Request("elm/move", move_params),
-                                 lambda _: None) # no need to handle result
+                                 lambda _: None)  # no need to handle result
 
         placeholder = 'Select the new file for the function {}'.format(function_name)
         items = [d['name'] for d in destinations]
