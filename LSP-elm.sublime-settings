@@ -12,9 +12,6 @@
 		"onlyUpdateDiagnosticsOnSave": false
 	},
 	"settings": {},
-	// ST4
-	"selector": "source.elm",
-	// ST3
 	"languages": [
 		{
 			"languageId": "elm",
