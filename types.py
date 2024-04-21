@@ -1,41 +1,40 @@
-from LSP.plugin.core.protocol import URI, Location, NotRequired, Range, TextDocumentIdentifier
-from LSP.plugin.core.typing import Tuple, TypedDict, List
+from __future__ import annotations
+from typing_extensions import TypeAlias, NotRequired, TypedDict
+from LSP.plugin.core.protocol import URI, Location, Range, TextDocumentIdentifier
 
 # Code Lens Show Reference - Start
-ShowReference = TypedDict('ShowReference', {
-    'references': List[Location],
-    'uri': URI,
-    'range': Range
-})
+class ShowReference(TypedDict):
+    references: list[Location]
+    uri: URI
+    range: Range
 
-ShowReferencesParams = List[ShowReference]
+ShowReferencesParams: TypeAlias = 'list[ShowReference]'
 # Code Lens Show Reference - End
 
 # Move Function Code Action - Start
-MoveDestination = TypedDict('MoveDestination', {
-  'name': str,
-  'path': str,
-  'uri': str
-})
+class MoveDestination(TypedDict):
+    name: str
+    path: str
+    uri: str
 
-MoveParamsParams = TypedDict('MoveFunctionCodeActionArgument', {
-    'textDocument': TextDocumentIdentifier,
-    'range': Range
-})
 
-MoveParams = TypedDict('MoveParams', {
-  'sourceUri': URI,
-  'params': MoveParamsParams,
-  'destination': NotRequired[MoveDestination]
-})
+class MoveParamsParams(TypedDict):
+    textDocument: TextDocumentIdentifier
+    range: Range
 
-MoveDestinationsResponse = TypedDict('MoveDestinationsResponse', {
-  'destinations': List[MoveDestination]
-})
 
-MoveFunctionCommand = TypedDict("MoveFunctionCommand", {
-  'arguments': Tuple[str, MoveParamsParams, str],
-  'command': str,  # string like elm.refactor-${workspaceId}, for example: 'elm.refactor-file:///home/predragnikolic/Documents/sandbox/elm-spa-example'
-  'title': str
-})
+class MoveParams(TypedDict):
+    sourceUri: URI
+    params: MoveParamsParams
+    destination: NotRequired[MoveDestination]
+
+
+class MoveDestinationsResponse(TypedDict):
+    destinations: list[MoveDestination]
+
+
+class MoveFunctionCommand(TypedDict):
+    arguments: tuple[str, MoveParamsParams, str]
+    command: str  # string like elm.refactor-${workspaceId}, for example: 'elm.refactor-file:///home/predragnikolic/Documents/sandbox/elm-spa-example'
+    title: str
 # Move Function Code Action - End
