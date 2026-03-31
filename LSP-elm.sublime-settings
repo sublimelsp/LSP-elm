@@ -1,6 +1,6 @@
 {
 	"command": ["${node_bin}", "${server_path}", "--stdio"],
-	"initializationOptions": {
+	"initialization_options": {
 		"trace.server": "off",
 		"elmPath": "",
 		"elmReviewPath": "",
