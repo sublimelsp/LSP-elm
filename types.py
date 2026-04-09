@@ -1,10 +1,17 @@
 from __future__ import annotations
-from typing_extensions import NotRequired, TypedDict, List, Tuple
-from LSP.plugin.core.protocol import URI, Location, Range, TextDocumentIdentifier
+
+from LSP.protocol import Location
+from LSP.protocol import Range
+from LSP.protocol import TextDocumentIdentifier
+from LSP.protocol import URI
+from typing import List
+from typing import TypedDict
+from typing_extensions import NotRequired
+
 
 # Code Lens Show Reference - Start
 class ShowReference(TypedDict):
-    references: List[Location]
+    references: list[Location]
     uri: URI
     range: Range
 
@@ -30,11 +37,11 @@ class MoveParams(TypedDict):
 
 
 class MoveDestinationsResponse(TypedDict):
-    destinations: List[MoveDestination]
+    destinations: list[MoveDestination]
 
 
 class MoveFunctionCommand(TypedDict):
-    arguments: Tuple[str, MoveParamsParams, str]
+    arguments: tuple[str, MoveParamsParams, str]
     command: str  # string like elm.refactor-${workspaceId}, for example: 'elm.refactor-file:///home/predragnikolic/Documents/sandbox/elm-spa-example'
     title: str
 # Move Function Code Action - End

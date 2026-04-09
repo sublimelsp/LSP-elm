@@ -1,8 +1,19 @@
-from .types import MoveDestinationsResponse, MoveFunctionCommand, MoveParamsParams, ShowReferencesParams, MoveParams
-from LSP.plugin.core.protocol import CodeAction, Request, Response
-from LSP.plugin.core.typing import Mapping, Callable, Any, cast
+from __future__ import annotations
+
+from .types import MoveDestinationsResponse
+from .types import MoveFunctionCommand
+from .types import MoveParams
+from .types import MoveParamsParams
+from .types import ShowReferencesParams
+from collections.abc import Mapping
+from LSP.plugin.core.protocol import Request
+from LSP.plugin.core.protocol import Response
 from LSP.plugin.locationpicker import LocationPicker
+from LSP.protocol import CodeAction
 from lsp_utils import NpmClientHandler
+from typing import Any
+from typing import Callable
+from typing import cast
 import os
 import sublime
 
@@ -16,7 +27,7 @@ def plugin_unloaded():
 
 
 class LspElmPlugin(NpmClientHandler):
-    package_name = __package__
+    package_name = str(__package__)
     server_directory = 'server'
     server_binary_path = os.path.join(
         server_directory, 'node_modules', '@elm-tooling', 'elm-language-server', 'out', 'node', 'index.js'
@@ -62,10 +73,10 @@ class LspElmPlugin(NpmClientHandler):
         if not command:
             return
         _, params, function_name = command.get('arguments')
-        move_params = {
+        move_params: MoveParams = {
             'sourceUri': params.get('textDocument').get('uri'),
             'params': params
-        }  # type: MoveParams
+        }
         session.send_request(Request('elm/getMoveDestinations', move_params),
                              lambda res: self.on_get_destinations(res, params, function_name))
 
@@ -82,15 +93,15 @@ class LspElmPlugin(NpmClientHandler):
         if not window:
             return
 
-        def on_done(index) -> None:
+        def on_done(index: int) -> None:
             if index == -1:
                 return
             destination = destinations[index]
-            move_params = {
+            move_params: MoveParams = {
                 'sourceUri': params.get('textDocument').get('uri'),
                 'params': params,
                 'destination': destination
-            }  # type: MoveParams
+            }
             session.send_request(Request("elm/move", move_params),
                                  lambda _: None)  # no need to handle result
 
