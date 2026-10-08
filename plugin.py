@@ -38,7 +38,7 @@ class LspElmPlugin(LspPlugin):
             cls.plugin_storage_path,
             ResourcePath('Packages', package_name, 'server'),
             Path('node_modules', '@elm-tooling', 'elm-language-server', 'out', 'node', 'index.js'),
-            node_version_requirement='>=14',
+            node_version_requirement='>=22.17.0',
         )
 
     @override
