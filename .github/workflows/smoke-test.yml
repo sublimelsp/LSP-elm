@@ -24,7 +24,7 @@ jobs:
 
       # The server compiles the project with the Elm compiler.
       - name: Install Elm
-        run: npm install --global elm --no-audit --no-fund
+        run: npm install --global elm@latest-0.19.1 --no-audit --no-fund
 
       # The server reads the packages that elm.json depends on from Elm's package cache, so download them first. The
       # fixture doesn't compile, so ignore the result.
