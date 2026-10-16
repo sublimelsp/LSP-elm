@@ -26,6 +26,13 @@ jobs:
       - name: Install Elm
         run: npm install --global elm --no-audit --no-fund
 
+      # The server reads the packages that elm.json depends on from Elm's package cache, so download them first. The
+      # fixture doesn't compile, so ignore the result.
+      - name: Download Elm packages
+        working-directory: tests/smoke
+        shell: bash
+        run: elm make src/Main.elm --output=main.js || true
+
       - uses: sublimelsp/lsp_smoke_test@v1
         with:
           # Provides the Elm syntax, which Sublime Text doesn't include.
